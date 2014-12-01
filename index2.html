@@ -1,0 +1,113 @@
+<html>
+<head>
+<!-- Latest compiled and minified CSS -->
+ 
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+<script src="mustache.js"></script>
+
+<script src="full_year_calendar.js"></script>
+
+</head>
+<body>
+
+<div class="container">
+    <div class="starter-template">
+        <h1>Calendar</h1>
+        <div id="console"></div>
+    
+    </div>
+</div>
+
+<script id="year" type="x-tmpl-mustache">
+    <div class="row">
+        <div class="col-md-4">{{ &january }}</div>
+        <div class="col-md-4">{{ &february }}</div>
+        <div class="col-md-4">{{ &march }}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">{{ &april }}</div>
+        <div class="col-md-4">{{ &may }}</div>
+        <div class="col-md-4">{{ &june }}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">{{ &july }}</div>
+        <div class="col-md-4">{{ &august }}</div>
+        <div class="col-md-4">{{ &september }}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">{{ &october }}</div>
+        <div class="col-md-4">{{ &november }}</div>
+        <div class="col-md-4">{{ &december }}</div>
+    </div>
+</script>
+
+<script id="month" type="x-tmpl-mustache">
+    <table border=3 cellspacing=3 cellpadding=3>
+        <thead>
+        <tr><td colspan='7' align='center'><b>{{ monthName }}</b></td></tr>
+        <tr><td>Sun</td><td>Mon</td><td>Tue</td><td>Wed</td><td>Thur</td><td>Fri</td>
+            <td>Sat</td></tr>
+        </thead>
+        <tbody>
+        {{ #weeks }}
+            <tr>
+                <td>{{ day0 }}</td>
+                <td>{{ day1 }}</td>
+                <td>{{ day2 }}</td>
+                <td>{{ day3 }}</td>
+                <td>{{ day4 }}</td>
+                <td>{{ day5 }}</td>
+                <td>{{ day6 }}</td>
+            </tr>
+        {{ /weeks }}
+
+        </tbody>
+    </table>
+</script>
+
+<script>
+    var january = FullYearCalendar.getMonthTable(0);
+    var february = FullYearCalendar.getMonthTable(1);
+    var march = FullYearCalendar.getMonthTable(2);
+    var april = FullYearCalendar.getMonthTable(3);
+    var may = FullYearCalendar.getMonthTable(4);
+    var june = FullYearCalendar.getMonthTable(5);
+    var july = FullYearCalendar.getMonthTable(6);
+    var august = FullYearCalendar.getMonthTable(7);
+    var september = FullYearCalendar.getMonthTable(8);
+    var october = FullYearCalendar.getMonthTable(9);
+    var november = FullYearCalendar.getMonthTable(10);
+    var december = FullYearCalendar.getMonthTable(11);
+
+    var template = $('#month').html();
+    Mustache.parse(template);   // optional, speeds up future uses
+    var allMonths = {};
+
+    allMonths.january = Mustache.render(template, january);
+    allMonths.february = Mustache.render(template, february);
+    allMonths.march = Mustache.render(template, march);
+    allMonths.april = Mustache.render(template, april);
+    allMonths.may = Mustache.render(template, may);
+    allMonths.june = Mustache.render(template, june);
+    allMonths.july = Mustache.render(template, july);
+    allMonths.august = Mustache.render(template, august);
+    allMonths.september = Mustache.render(template, september);
+    allMonths.october = Mustache.render(template, october);
+    allMonths.november = Mustache.render(template, november);
+    allMonths.december = Mustache.render(template, december);
+    
+    var yearTemplate = $('#year').html();
+    Mustache.parse(yearTemplate);   // optional, speeds up future uses
+    var yearRendered = Mustache.render(yearTemplate, allMonths);
+
+    $('#console').html(yearRendered);
+</script>
+
+</body>
+</html>
