@@ -8,7 +8,13 @@ var FullYearCalendar = {};
 
         var monthObj = {};
         monthObj.monthName = getMonthName(month);
-        var lastDayOfMonth = new Date(new Date(month + 2 + "/1/" + _today.getFullYear()) - 1);
+        var year = _today.getFullYear();
+        var firstOfNextMonth = new Date(month + 2 + "/1/" + _today.getFullYear());
+        if (month == 11) {
+            firstOfNextMonth = new Date("1/1/" + (_today.getFullYear() + 1));
+        }
+
+        var lastDayOfMonth = new Date(firstOfNextMonth - 1);
         var firstOfMonth = new Date(month + 1 + "/1/" + _today.getFullYear());
         var weeks = [];
         var day = 1;
