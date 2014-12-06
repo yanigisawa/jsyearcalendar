@@ -1,6 +1,6 @@
 # README #
 
-Simple JavaScript only full year calendar rendering app. 
+Simple JavaScript only full year calendar rendering app. See running example [here](http://calendar.jamesralexander.com/).
 
 ### How do I get set up? ###
 
