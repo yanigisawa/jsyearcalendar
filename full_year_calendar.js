@@ -2,20 +2,17 @@ var FullYearCalendar = {};
 
 (function(FullYearCalendar) {
 
-  var _today = new Date();
-
-  FullYearCalendar.getMonthTable = function(month) {
+  FullYearCalendar.getMonthTable = function(month, year) {
 
     var monthObj = {};
     monthObj.monthName = getMonthName(month);
-    var year = _today.getFullYear();
-    var firstOfNextMonth = new Date(month + 2 + "/1/" + _today.getFullYear());
+    var firstOfNextMonth = new Date(month + 2 + "/1/" + year);
     if (month == 11) {
-      firstOfNextMonth = new Date("1/1/" + (_today.getFullYear() + 1));
+      firstOfNextMonth = new Date("1/1/" + (year + 1));
     }
 
     var lastDayOfMonth = new Date(firstOfNextMonth - 1);
-    var firstOfMonth = new Date(month + 1 + "/1/" + _today.getFullYear());
+    var firstOfMonth = new Date(month + 1 + "/1/" + year);
     var weeks = [];
     var day = 1;
     while (day <= lastDayOfMonth.getDate()) {

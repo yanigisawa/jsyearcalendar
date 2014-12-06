@@ -12,38 +12,42 @@
 <script src="mustache.js"></script>
 
 <script src="full_year_calendar.js"></script>
+<style>
 
+    .monthCell { padding-bottom: 10px; }
+    td { text-align: center; width: 42px; }
+</style>
 </head>
 <body>
 
 <div class="container">
     <div class="starter-template">
-        <h1>Calendar</h1>
+        <h1 class="text-center">Calendar</h1>
         <div id="console"></div>
-    
     </div>
 </div>
 
 <script id="year" type="x-tmpl-mustache">
+    <h2 class="text-center" id="{{ year }}">{{ year }}</h2>
     <div class="row">
-        <div class="col-md-4">{{ &january }}</div>
-        <div class="col-md-4">{{ &february }}</div>
-        <div class="col-md-4">{{ &march }}</div>
+        <div class="col-md-4 monthCell">{{ &month0 }}</div>
+        <div class="col-md-4 monthCell">{{ &month1 }}</div>
+        <div class="col-md-4 monthCell">{{ &month2 }}</div>
     </div>
     <div class="row">
-        <div class="col-md-4">{{ &april }}</div>
-        <div class="col-md-4">{{ &may }}</div>
-        <div class="col-md-4">{{ &june }}</div>
+        <div class="col-md-4 monthCell">{{ &month3 }}</div>
+        <div class="col-md-4 monthCell">{{ &month4 }}</div>
+        <div class="col-md-4 monthCell">{{ &month5 }}</div>
     </div>
     <div class="row">
-        <div class="col-md-4">{{ &july }}</div>
-        <div class="col-md-4">{{ &august }}</div>
-        <div class="col-md-4">{{ &september }}</div>
+        <div class="col-md-4 monthCell">{{ &month6 }}</div>
+        <div class="col-md-4 monthCell">{{ &month7 }}</div>
+        <div class="col-md-4 monthCell">{{ &month8 }}</div>
     </div>
     <div class="row">
-        <div class="col-md-4">{{ &october }}</div>
-        <div class="col-md-4">{{ &november }}</div>
-        <div class="col-md-4">{{ &december }}</div>
+        <div class="col-md-4 monthCell">{{ &month9 }}</div>
+        <div class="col-md-4 monthCell">{{ &month10 }}</div>
+        <div class="col-md-4 monthCell">{{ &month11 }}</div>
     </div>
 </script>
 
@@ -72,41 +76,32 @@
 </script>
 
 <script>
-    var january = FullYearCalendar.getMonthTable(0);
-    var february = FullYearCalendar.getMonthTable(1);
-    var march = FullYearCalendar.getMonthTable(2);
-    var april = FullYearCalendar.getMonthTable(3);
-    var may = FullYearCalendar.getMonthTable(4);
-    var june = FullYearCalendar.getMonthTable(5);
-    var july = FullYearCalendar.getMonthTable(6);
-    var august = FullYearCalendar.getMonthTable(7);
-    var september = FullYearCalendar.getMonthTable(8);
-    var october = FullYearCalendar.getMonthTable(9);
-    var november = FullYearCalendar.getMonthTable(10);
-    var december = FullYearCalendar.getMonthTable(11);
-
     var template = $('#month').html();
     Mustache.parse(template);   // optional, speeds up future uses
-    var allMonths = {};
+    var today = new Date();
+    var years = [];
+    years.push(today.getFullYear() - 1);
+    years.push(today.getFullYear());
+    years.push(today.getFullYear() + 1);
 
-    allMonths.january = Mustache.render(template, january);
-    allMonths.february = Mustache.render(template, february);
-    allMonths.march = Mustache.render(template, march);
-    allMonths.april = Mustache.render(template, april);
-    allMonths.may = Mustache.render(template, may);
-    allMonths.june = Mustache.render(template, june);
-    allMonths.july = Mustache.render(template, july);
-    allMonths.august = Mustache.render(template, august);
-    allMonths.september = Mustache.render(template, september);
-    allMonths.october = Mustache.render(template, october);
-    allMonths.november = Mustache.render(template, november);
-    allMonths.december = Mustache.render(template, december);
-    
     var yearTemplate = $('#year').html();
     Mustache.parse(yearTemplate);   // optional, speeds up future uses
-    var yearRendered = Mustache.render(yearTemplate, allMonths);
+    var yearRendered = "";
+
+    for (var j = 0; j < years.length; j++){
+        var allMonths = {};
+        allMonths.year = years[j];
+        for (var i = 0; i < 12; i++) {
+            var monthHTML = FullYearCalendar.getMonthTable(i, allMonths.year);
+            allMonths["month" + i] = Mustache.render(template, monthHTML);
+        }
+        yearRendered += Mustache.render(yearTemplate, allMonths);
+    }
 
     $('#console').html(yearRendered);
+    $('html, body').animate({
+        scrollTop: $("#" + today.getFullYear()).offset().top
+    }, 700);
 </script>
 
 </body>
