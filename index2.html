@@ -1,7 +1,7 @@
 <html>
 <head>
 <!-- Latest compiled and minified CSS -->
- 
+
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
@@ -15,7 +15,33 @@
 
     .monthCell { padding-bottom: 10px; }
     td { text-align: center; width: 42px; }
+    #console { height: 100%; width: 100%; }
 
+    body {
+        font-size: 2em;
+    }
+
+    @page {
+
+    }
+
+    @media print {
+        html, body {
+            width: 100%;
+            height: 100%;
+
+        }
+
+
+        td { text-align: center; }
+
+        .monthCell {
+
+        }
+
+
+    /* ... the rest of the rules ... */
+    }
 </style>
 </head>
 <body>
@@ -52,7 +78,7 @@
 </script>
 
 <script id="month" type="x-tmpl-mustache">
-    <table border=3 cellspacing=3 cellpadding=3 align=center>
+    <table border="3" cellspacing="3" cellpadding="3" align="center" class="monthTable">
         <thead>
         <tr><td colspan='7' align='center'><b>{{ monthName }}</b></td></tr>
         <tr><td>Sun</td><td>Mon</td><td>Tue</td><td>Wed</td><td>Thur</td><td>Fri</td>
@@ -80,9 +106,8 @@
     Mustache.parse(template);   // optional, speeds up future uses
     var today = new Date();
     var years = [];
-    years.push(today.getFullYear() - 1);
+
     years.push(today.getFullYear());
-    years.push(today.getFullYear() + 1);
 
     var yearTemplate = $('#year').html();
     Mustache.parse(yearTemplate);   // optional, speeds up future uses
@@ -92,8 +117,8 @@
         var allMonths = {};
         allMonths.year = years[j];
         for (var i = 0; i < 12; i++) {
-            var monthHTML = FullYearCalendar.getMonthTable(i, allMonths.year);
-            allMonths["month" + i] = Mustache.render(template, monthHTML);
+            var monthData = FullYearCalendar.getMonthTable(i, allMonths.year);
+            allMonths["month" + i] = Mustache.render(template, monthData);
         }
         yearRendered += Mustache.render(yearTemplate, allMonths);
     }
